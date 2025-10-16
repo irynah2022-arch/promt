@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Конструктор промптов для учителей Беларуси</title>
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --secondary: #FF9800;
+      --accent: #2196F3;
+      --light: #F5F9FF;
+      --dark: #333;
+      --white: #fff;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #f8bbd0);
+      padding: 20px;
+      color: var(--dark);
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #d81b60;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    h2 {
+      margin: 20px 0 12px;
+      color: var(--primary);
+    }
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-weight: 600;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .checkbox-item, .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 17px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #0d8bf2;
+    }
+    #promptOutput {
+      background: #f0f8ff;
+      border: 2px dashed #2196F3;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 15px;
+    }
+    .duration-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .duration-buttons button {
+      width: auto;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    .structure-edit {
+      margin-top: 10px;
+    }
+    .hidden {
+      display: none;
+    }
+    .lesson-structure {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 8px;
+      border-left: 4px solid var(--accent);
+      font-size: 15px;
+    }
+    .lesson-structure ol {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+    .lesson-structure ul {
+      padding-left: 20px;
+      margin-top: 6px;
+    }
+    .lesson-structure li {
+      margin-bottom: 6px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Конструктор промптов для учителей начальных классов Беларуси</h1>
+
+    <!-- Предмет -->
+    <label for="subject">1. Предмет:</label>
+    <select id="subject">
+      <option value="bel_mova">Беларуская мова</option>
+      <option value="bel_lit">Беларуская літаратура</option>
+      <option value="rus_yaz">Русский язык</option>
+      <option value="rus_lit">Русская литература</option>
+      <option value="matem">Математика</option>
+      <option value="chel_mir">Человек и мир</option>
+      <option value="izo">Изобразительное искусство</option>
+      <option value="trud">Трудовое обучение</option>
+      <option value="muzyka">Музыка</option>
+    </select>
+
+    <!-- Класс -->
+    <label for="grade">2. Класс:</label>
+    <select id="grade">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+
+    <!-- Тема урока -->
+    <label for="topic">3. Тема урока:</label>
+    <input type="text" id="topic" placeholder="Например: Складанне сказаў, Сложение в пределах 20 и т.д.">
+
+    <!-- Доп. параметры -->
+    <label>4. Дополнительные параметры:</label>
+    <div class="checkbox-group" id="extraParams">
+      <label class="checkbox-item"><input type="checkbox" value="inkl"> Учёт инклюзивного образования</label>
+      <label class="checkbox-item"><input type="checkbox" value="game"> Игровая форма подачи материала</label>
+      <label class="checkbox-item"><input type="checkbox" value="pairs"> Работа в парах или группах</label>
+      <label class="checkbox-item"><input type="checkbox" value="ict"> Использование ИКТ</label>
+      <label class="checkbox-item"><input type="checkbox" value="life"> Связь с жизнью / краеведение</label>
+      <label class="checkbox-item"><input type="checkbox" value="krit"> Развитие критического мышления</label>
+      <label class="checkbox-item"><input type="checkbox" value="patriot"> Воспитание патриотизма</label>
+      
+      <label class="checkbox-item"><input type="checkbox" value="gram_chit"> Развитие читательской грамотности</label>
+      <label class="checkbox-item"><input type="checkbox" value="gram_mat"> Развитие математической грамотности</label>
+      <label class="checkbox-item"><input type="checkbox" value="gram_est"> Развитие естественнонаучной грамотности</label>
+      <label class="checkbox-item"><input type="checkbox" value="gram_fin"> Развитие финансовой грамотности</label>
+      
+      <label class="checkbox-item"><input type="checkbox" value="other"> Другое: <input type="text" id="otherParam" style="width:120px; margin-left:5px; padding:4px;"></label>
+    </div>
+
+    <!-- Подход -->
+    <label>5. Подход к обучению:</label>
+    <div class="radio-group">
+      <label class="radio-item"><input type="radio" name="approach" value="trad"> Традиционный</label>
+      <label class="radio-item"><input type="radio" name="approach" value="deyat"> Деятельностный</label>
+      <label class="radio-item"><input type="radio" name="approach" value="project"> Проектный</label>
+      <label class="radio-item"><input type="radio" name="approach" value="game"> Игровой</label>
+      <label class="radio-item"><input type="radio" name="approach" value="diff"> Дифференцированный</label>
+      <label class="radio-item"><input type="radio" name="approach" value="combo"> Комбинированный</label>
+    </div>
+
+    <!-- Длительность -->
+    <label>6. Длительность урока:</label>
+    <div class="duration-buttons">
+      <button type="button" onclick="setDuration(35)">35 мин (1 кл)</button>
+      <button type="button" onclick="setDuration(40)">40 мин (2–4 кл)</button>
+      <button type="button" onclick="setDuration(45)" id="defaultDur">45 мин</button>
+    </div>
+    <input type="hidden" id="duration" value="45">
+
+    <!-- Структура урока -->
+    <label>7. Структура урока:</label>
+    <div class="lesson-structure">
+      <strong>Стандартная структура урока (общая длительность: <span id="durDisplay">45</span> минут):</strong>
+      <ol>
+        <li><strong>Организационно-мотивационный этап</strong>
+          <ul>
+            <li>Организационный момент: приветствие, проверка готовности, создание рабочей атмосферы</li>
+            <li>Мотивация: определение целей и задач урока, вовлечение учащихся</li>
+          </ul>
+        </li>
+        <li><strong>Операционно-деятельностный этап (основной)</strong>
+          <ul>
+            <li>Актуализация знаний: проверка Д/З, повторение опорных понятий</li>
+            <li>Усвоение новых знаний: объяснение материала, первичное закрепление</li>
+            <li>Закрепление и применение: разноуровневые и творческие задания</li>
+            <li>Обобщение и систематизация: связь нового с ранее изученным</li>
+          </ul>
+        </li>
+        <li><strong>Заключительный этап</strong>
+          <ul>
+            <li>Рефлексия: подведение итогов, эмоциональная оценка</li>
+            <li>Домашнее задание: формулировка, инструктаж, дифференциация</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Изменить структуру -->
+    <div class="structure-edit">
+      <label><input type="checkbox" id="customStructure"> Изменить структуру урока</label>
+      <textarea id="structureText" class="hidden" placeholder="Опишите желаемую структуру урока..."></textarea>
+    </div>
+
+    <!-- Кнопка генерации -->
+    <button onclick="generatePrompt()">Сгенерировать промпт</button>
+
+    <!-- Готовый промпт -->
+    <h2>📋 Готовый промпт:</h2>
+    <div id="promptOutput">Заполните форму выше и нажмите «Сгенерировать промпт»</div>
+    <button onclick="copyPrompt()" style="margin-top:10px; background:#4CAF50;">Копировать промпт</button>
+
+    <!-- Подпись -->
+    <footer>
+      Ирина Гаевская, учитель начальных классов
+    </footer>
+  </div>
+
+  <script>
+    function setDuration(mins) {
+      document.getElementById('duration').value = mins;
+      document.getElementById('durDisplay').textContent = mins;
+    }
+
+    document.getElementById('customStructure').addEventListener('change', function() {
+      const textarea = document.getElementById('structureText');
+      textarea.classList.toggle('hidden', !this.checked);
+    });
+
+    const subjectsRU = {
+      bel_mova: "беларускай мове",
+      bel_lit: "беларускай літаратуры",
+      rus_yaz: "русскому языку",
+      rus_lit: "русской литературе",
+      matem: "математике",
+      chel_mir: "предмету «Человек и мир»",
+      izo: "изобразительному искусству",
+      trud: "трудовому обучению",
+      muzyka: "музыке"
+    };
+
+    const subjectsBE = {
+      bel_mova: "беларускай мове",
+      bel_lit: "беларускай літаратуры",
+      rus_yaz: "рускай мове",
+      rus_lit: "рускай літаратуры",
+      matem: "матэматыцы",
+      chel_mir: "прадмеце «Чалавек і свет»",
+      izo: "выяўленчаму мастацтву",
+      trud: "працоўнаму навучанню",
+      muzyka: "музыцы"
+    };
+
+    const extraParamsRU = {
+      inkl: "учёт инклюзивного образования",
+      game: "игровая форма подачи материала",
+      pairs: "работа в парах или группах",
+      ict: "использование ИКТ",
+      life: "связь с жизнью и краеведческий компонент",
+      krit: "развитие критического мышления",
+      patriot: "воспитание патриотизма и национальной идентичности",
+      gram_chit: "развитие читательской грамотности",
+      gram_mat: "развитие математической грамотности",
+      gram_est: "развитие естественнонаучной грамотности",
+      gram_fin: "развитие финансовой грамотности"
+    };
+
+    const extraParamsBE = {
+      inkl: "ўлік інклюзіўнай адукацыі",
+      game: "гульнявая форма падачы матэрыялу",
+      pairs: "праца ў парах ці групах",
+      ict: "выкарыстанне ІКТ",
+      life: "сувязь з жыццём і краязнаўчы кампанент",
+      krit: "развіццё крытычнага мыслення",
+      patriot: "выхаванне патрыятызму і нацыянальнай культуры",
+      gram_chit: "развіццё чытацкай граматнасці",
+      gram_mat: "развіццё матэматычнай граматнасці",
+      gram_est: "развіццё прыродазнаўчай граматнасці",
+      gram_fin: "развіццё фінансавай граматнасці"
+    };
+
+    const approachesRU = {
+      trad: "традиционный",
+      deyat: "деятельностный",
+      project: "проектный",
+      game: "игровой",
+      diff: "дифференцированный",
+      combo: "комбинированный"
+    };
+
+    const approachesBE = {
+      trad: "традыцыйны",
+      deyat: "дзейнасны",
+      project: "праектны",
+      game: "гульнявы",
+      diff: "дыферэнцыраваны",
+      combo: "камбінаваны"
+    };
+
+    const gradesBE = {1: "1", 2: "2", 3: "3", 4: "4"};
+
+    function generatePrompt() {
+      const subjectKey = document.getElementById('subject').value;
+      const grade = document.getElementById('grade').value;
+      const topic = document.getElementById('topic').value.trim();
+      const duration = document.getElementById('duration').value;
+      const customStruct = document.getElementById('customStructure').checked;
+      const structText = document.getElementById('structureText').value.trim();
+      const otherParam = document.getElementById('otherParam').value.trim();
+
+      const isBelarusian = (subjectKey === 'bel_mova' || subjectKey === 'bel_lit');
+
+      if (!topic) {
+        alert(isBelarusian ? "Калі ласка, увядзіце тэму ўрока." : "Пожалуйста, введите тему урока.");
+        return;
+      }
+
+      // Сбор параметров
+      const checkedBoxes = Array.from(document.querySelectorAll('#extraParams input[type="checkbox"]:checked'))
+        .filter(cb => cb.value !== 'other')
+        .map(cb => cb.value);
+
+      let extraList = [];
+      if (isBelarusian) {
+        extraList = checkedBoxes.map(k => extraParamsBE[k]);
+        if (otherParam) extraList.push(otherParam);
+      } else {
+        extraList = checkedBoxes.map(k => extraParamsRU[k]);
+        if (otherParam) extraList.push(otherParam);
+      }
+
+      // Подход
+      const approachEl = document.querySelector('input[name="approach"]:checked');
+      let approachText = "";
+      if (approachEl) {
+        const appKey = approachEl.value;
+        approachText = isBelarusian ? approachesBE[appKey] : approachesRU[appKey];
+      }
+
+      // Структура
+      let structureDesc = "";
+      if (customStruct && structText) {
+        structureDesc = isBelarusian ? 
+          `Структура ўрока: ${structText}.` : 
+          `Структура урока: ${structText}.`;
+      } else {
+        structureDesc = isBelarusian ?
+          `Ўрок павінен быць пабудаваны па наступнай структуры: 1) Арганізацыйна-матывацыйны этап (прывітанне, матывацыя, вызначэнне мэтаў); 2) Аперацыйна-дзейнасны этап (актуалізацыя, тлумачэнне новага, замацаванне, абагульненне); 3) Заключны этап (рэфлексія і дамашняе заданне).` :
+          `Урок должен быть построен по следующей структуре: 1) Организационно-мотивационный этап (приветствие, мотивация, постановка целей); 2) Операционно-деятельностный этап (актуализация, объяснение нового, закрепление, обобщение); 3) Заключительный этап (рефлексия и домашнее задание).`;
+      }
+
+      // Формируем промпт с новым началом
+      let prompt = "";
+      if (isBelarusian) {
+        prompt = `Ты — настаўнік пачатковых класаў па ${subjectsBE[subjectKey]}. Ствары план ўрока для ${gradesBE[grade]} класа на тэму «${topic}». Працягласць ўрока — ${duration} хвілін. ${structureDesc} `;
+        if (extraList.length > 0) {
+          prompt += `Улічвай наступнае: ${extraList.join(', ')}. `;
+        }
+        if (approachText) {
+          prompt += `Выкарыстай ${approachText} падыход.`;
+        }
+      } else {
+        prompt = `Ты — учитель начальных классов по ${subjectsRU[subjectKey]}. Создай план урока для ${grade} класса на тему «${topic}». Продолжительность урока — ${duration} минут. ${structureDesc} `;
+        if (extraList.length > 0) {
+          prompt += `Учти следующее: ${extraList.join(', ')}. `;
+        }
+        if (approachText) {
+          prompt += `Используй ${approachText} подход.`;
+        }
+      }
+
+      document.getElementById('promptOutput').textContent = prompt;
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById('promptOutput').textContent;
+      if (text.includes('Заполните форму')) {
+        alert("Сначала сгенерируйте промпт!");
+        return;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Промпт скопирован!");
+      }).catch(() => {
+        alert("Не удалось скопировать. Выделите текст и скопируйте вручную.");
+      });
+    }
+
+    // Инициализация
+    document.getElementById('durDisplay').textContent = "45";
+  </script>
+</body>
+</html>
